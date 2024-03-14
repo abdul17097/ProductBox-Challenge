@@ -1,5 +1,6 @@
 const fs = require("fs");
 const errorHandler = require("../utils/errorHandler");
+const { v4: uuidv4 } = require("uuid");
 
 let products = {};
 // get all products
@@ -26,6 +27,21 @@ const singleProduct = (req, res, next) => {
   }
 };
 
+// add product
+const addProduct = (req, res, next) => {
+  try {
+    const newProduct = req.body;
+    // generate unique id for product
+    const id = uuidv4();
+    newProduct.id = id;
+    products[id] = newProduct;
+    saveDataToFile();
+    res.status(201).json({ product: newProduct });
+  } catch (error) {
+    next(errorHandler(error));
+  }
+};
+
 function loadInitialData() {
   try {
     const data = fs.readFileSync("init_data.json");
@@ -38,4 +54,11 @@ function loadInitialData() {
 // Load initial data on server start
 loadInitialData();
 
-module.exports = { allProducts, singleProduct };
+// Function to save data to init_data.json
+function saveDataToFile() {
+  fs.writeFileSync(
+    "init_data.json",
+    JSON.stringify({ data: products }, null, 2)
+  );
+}
+module.exports = { allProducts, singleProduct, addProduct };

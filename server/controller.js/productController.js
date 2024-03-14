@@ -1,12 +1,13 @@
 const fs = require("fs");
 const errorHandler = require("../utils/errorHandler");
 const { v4: uuidv4 } = require("uuid");
+const { log } = require("console");
 
 let products = {};
 // get all products
 const allProducts = (req, res, next) => {
   try {
-    res.status(200).json({ success: true, products: products });
+    res.status(200).json({ success: true, products: Object.values(products) });
   } catch (error) {
     next(errorHandler(error));
   }
@@ -29,6 +30,7 @@ const singleProduct = (req, res, next) => {
 
 // add product
 const addProduct = (req, res, next) => {
+  console.log(req.body);
   try {
     const newProduct = req.body;
     // generate unique id for product
@@ -73,13 +75,11 @@ const updateProduct = (req, res, next) => {
       products[id] = updatedProduct;
       // Save updated data to the file
       saveDataToFile();
-      res
-        .status(200)
-        .json({
-          updatedProduct,
-          success: true,
-          message: "Product updated successfully",
-        });
+      res.status(200).json({
+        updatedProduct,
+        success: true,
+        message: "Product updated successfully",
+      });
     }
   } catch (error) {
     next(errorHandler(error));

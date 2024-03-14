@@ -6,7 +6,7 @@ let products = {};
 // get all products
 const allProducts = (req, res, next) => {
   try {
-    res.status(200).json({ products: products });
+    res.status(200).json({ success: true, products: products });
   } catch (error) {
     next(errorHandler(error));
   }
@@ -20,7 +20,7 @@ const singleProduct = (req, res, next) => {
     if (!product) {
       next(errorHandler(404, "product not found"));
     } else {
-      res.status(200).json({ product });
+      res.status(200).json({ success: true, product });
     }
   } catch (error) {
     next(errorHandler(error));
@@ -36,7 +36,25 @@ const addProduct = (req, res, next) => {
     newProduct.id = id;
     products[id] = newProduct;
     saveDataToFile();
-    res.status(201).json({ product: newProduct });
+    res.status(201).json({ success: true, product: newProduct });
+  } catch (error) {
+    next(errorHandler(error));
+  }
+};
+
+// delete the product
+const deleteProduct = (req, res, next) => {
+  try {
+    const id = req.params.id;
+    if (!products[id]) {
+      res.status(404).json({ message: "Product not found" });
+    } else {
+      delete products[id];
+      saveDataToFile(); // Save updated data to the file
+      res
+        .status(200)
+        .json({ success: true, message: "Product Deleted Successfully" });
+    }
   } catch (error) {
     next(errorHandler(error));
   }
@@ -61,4 +79,4 @@ function saveDataToFile() {
     JSON.stringify({ data: products }, null, 2)
   );
 }
-module.exports = { allProducts, singleProduct, addProduct };
+module.exports = { allProducts, singleProduct, addProduct, deleteProduct };

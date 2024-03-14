@@ -29,12 +29,6 @@
       "name": "Cookie Jar",
       "price": "25",
       "img": "./img/cookies.jpg"
-    },
-    "245115cd-be78-4b56-a4b4-77b36d320dfb": {
-      "name": "New Item",
-      "price": 15,
-      "img": "./img/new_item.jpg",
-      "id": "245115cd-be78-4b56-a4b4-77b36d320dfb"
     }
   }
 }

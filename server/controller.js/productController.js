@@ -47,10 +47,11 @@ const deleteProduct = (req, res, next) => {
   try {
     const id = req.params.id;
     if (!products[id]) {
-      res.status(404).json({ message: "Product not found" });
+      res.status(404).json({ success: false, message: "Product not found" });
     } else {
       delete products[id];
-      saveDataToFile(); // Save updated data to the file
+      // Save updated data to the file
+      saveDataToFile();
       res
         .status(200)
         .json({ success: true, message: "Product Deleted Successfully" });
@@ -60,6 +61,30 @@ const deleteProduct = (req, res, next) => {
   }
 };
 
+// update the product
+const updateProduct = (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const updatedProduct = req.body;
+    if (!products[id]) {
+      res.status(404).json({ success: false, message: "Product not found" });
+    } else {
+      updatedProduct.id = id;
+      products[id] = updatedProduct;
+      // Save updated data to the file
+      saveDataToFile();
+      res
+        .status(200)
+        .json({
+          updatedProduct,
+          success: true,
+          message: "Product updated successfully",
+        });
+    }
+  } catch (error) {
+    next(errorHandler(error));
+  }
+};
 function loadInitialData() {
   try {
     const data = fs.readFileSync("init_data.json");
@@ -79,4 +104,10 @@ function saveDataToFile() {
     JSON.stringify({ data: products }, null, 2)
   );
 }
-module.exports = { allProducts, singleProduct, addProduct, deleteProduct };
+module.exports = {
+  allProducts,
+  singleProduct,
+  addProduct,
+  deleteProduct,
+  updateProduct,
+};

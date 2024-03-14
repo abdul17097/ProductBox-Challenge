@@ -29,6 +29,30 @@
       "name": "Cookie Jar",
       "price": "25",
       "img": "./img/cookies.jpg"
+    },
+    "252cab3a-4af2-497f-92d1-08f4d479994e": {
+      "name": "New Item",
+      "price": 17,
+      "img": "./img/new_item.jpg",
+      "id": "252cab3a-4af2-497f-92d1-08f4d479994e"
+    },
+    "b8501949-1e14-4870-800a-411feaaaa5cd": {
+      "name": "New Item",
+      "price": 21,
+      "img": "./img/new_item.jpg",
+      "id": "b8501949-1e14-4870-800a-411feaaaa5cd"
+    },
+    "3079f611-e5c9-46ba-a1de-e9b0d51cdc02": {
+      "name": "New Item",
+      "price": 22,
+      "img": "./img/new_item.jpg",
+      "id": "3079f611-e5c9-46ba-a1de-e9b0d51cdc02"
+    },
+    "bb3bdd8b-14fb-42a2-8b03-40d4ad3510e0": {
+      "name": "New Item",
+      "price": 20,
+      "img": "./img/new_item.jpg",
+      "id": "bb3bdd8b-14fb-42a2-8b03-40d4ad3510e0"
     }
   }
 }

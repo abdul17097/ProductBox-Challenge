@@ -82,19 +82,10 @@ export const StateProvider = ({ children }) => {
         toast.error("Delete Products failed");
       }
     } catch (error) {}
-    // const filterProduct = products.filter((item) => item.id!== id);
-    // setProducts(filterProduct);
+    console.log(error)
   };
 
-  const searchProduct = (searchQuery) => {
-    const filteredProducts = products.filter((product) => {
-      return (
-        searchQuery === "" ||
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    });
-    setProducts(filteredProducts);
-  };
+
 
   return (
     <StateContext.Provider
@@ -104,7 +95,6 @@ export const StateProvider = ({ children }) => {
         cartItems,
         handleDelete,
         addProduct,
-        searchProduct,
         deleteProduct,
       }}
     >

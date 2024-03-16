@@ -1,36 +1,21 @@
 import React, { useEffect, useState } from "react";
-import ProductCart from "../components/ProductCart";
+import { useStateValue } from "../context/StateProvider";
+import ProductCard from "../components/ProductCard";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const fetchProducts = async (req, res) => {
-    try {
-      const products = await fetch("http://localhost:5000/products", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await products.json();
-      console.log(data.products);
-      setProducts(data.products);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { products } = useStateValue();
   return (
-    <div
-      //   sm:px-[8rem] px-[1rem] lg:px-[5rem]
-      className=" 
-      mt-[4rem]"
-    >
-      <div className="bg-[#FFECE2] py-10 text-center text-3xl font-semibold">
-        Products
+    <div className="">
+      <div className="bg-[#FFECE2] flex flex-col gap-4 items-center py-10 ">
+        <h1 className="text-center text-3xl font-semibold">Products</h1>
+        <p>{products.length} products</p>
       </div>
-      <div className="sm:px-[8rem] px-[1rem] lg:px-[5rem] my-5 grid grid-cols-1 gap-5  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4">
-        {products && products.map((item) => <ProductCart item={item} />)}
+      <div className="sm:px-[8rem] px-[1rem] lg:px-[5rem] place-items-center my-5 grid grid-cols-1 gap-5  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4">
+        {products.length > 0 ? (
+          products.map((item, index) => <ProductCard item={item} key={index} />)
+        ) : (
+          <div className="text-center border">Add product</div>
+        )}
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { useStateValue } from "../context/StateProvider";
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
+  const { cartItems } = useStateValue();
 
   const sectionLink = [
     {
@@ -24,11 +26,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`flex justify-between fixed top-0 left-0 w-full bg-slate-500 z-[9999] items-center sm:px-[8rem] px-[1rem] lg:px-[13rem]   py-5 `}
+      className={`flex justify-between  w-full bg-slate-500 z-[9999] items-center sm:px-[8rem] px-[1rem] lg:px-[13rem]   py-5 `}
     >
       <div className="flex items-center gap-1 lg:gap-3  text-yellow-500">
         <NavLink to="/" className="lg:text-3xl font-semibold ">
-          {"[A]"}
+          {"[R]"}
         </NavLink>
         <h2 className="uppercase lg:text-2xl  font-semibold  lg:font-bold">
           RandoStore
@@ -42,7 +44,7 @@ const Navbar = () => {
               to="/checkout"
             >
               <span className="w-5 absolute bottom-4 left-3 text-sm bg-slate-500 text-yellow-100 rounded-full justify-center items-center flex h-5 border">
-                0
+                {cartItems.length}
               </span>
               <MdOutlineShoppingCart className="text-2xl text-yellow-500" />
             </NavLink>
@@ -99,7 +101,7 @@ const Navbar = () => {
               to="/checkout"
             >
               <span className="w-5 absolute bottom-5 left-3 bg-slate-500 text-yellow-100 rounded-full justify-center items-center flex h-5 border">
-                0
+                {cartItems.length}
               </span>
               <MdOutlineShoppingCart className="text-3xl" />
             </NavLink>

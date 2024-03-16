@@ -1,7 +1,6 @@
 const fs = require("fs");
 const errorHandler = require("../utils/errorHandler");
 const { v4: uuidv4 } = require("uuid");
-const { log } = require("console");
 
 let products = {};
 // get all products
@@ -30,12 +29,12 @@ const singleProduct = (req, res, next) => {
 
 // add product
 const addProduct = (req, res, next) => {
-  console.log(req.body);
+  const imagePath = req.file.path;
   try {
     const newProduct = req.body;
-    // generate unique id for product
     const id = uuidv4();
     newProduct.id = id;
+    newProduct.image = "http://localhost:5000/" + imagePath;
     products[id] = newProduct;
     saveDataToFile();
     res.status(201).json({ success: true, product: newProduct });
@@ -48,11 +47,11 @@ const addProduct = (req, res, next) => {
 const deleteProduct = (req, res, next) => {
   try {
     const id = req.params.id;
+    console.log(id);
     if (!products[id]) {
       res.status(404).json({ success: false, message: "Product not found" });
     } else {
       delete products[id];
-      // Save updated data to the file
       saveDataToFile();
       res
         .status(200)
